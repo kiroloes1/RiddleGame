@@ -460,20 +460,19 @@ function initGame() {
   if (!startBtn) return;
 
   startBtn.addEventListener("click", function(e) {
-    e.preventDefault();
-    const intro = document.getElementById("intro");
-    const riddlesSection = document.getElementById("riddles-section");
+ 
 
-    if (intro && riddlesSection) {
-      intro.classList.add("slide-out");
       setTimeout(() => {
-        riddlesSection.classList.remove("hidden");
-        window.scrollTo(0, 0);
-        riddlesSection.scrollIntoView({ behavior: "smooth" });
+        e.preventDefault()
+            const intro = document.getElementById("intro");
+
+    
+      intro.classList.add("slide-out");
+           
       }, 800);
     }
-  });
-}
+
+)}
 
 // تنفيذ عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
@@ -509,6 +508,12 @@ containerCard.innerHTML = container;
 // حفظ رقم اللغز في localStorage
 function saveRiddleIndex(i) {
   localStorage.setItem('currentRiddle', i);
+  displayRiddle();
+}
+function update(){
+   let riddleIndex = parseInt(localStorage.getItem('currentRiddle')) || 0;
+   riddleIndex+=1
+     localStorage.setItem('currentRiddle',riddleIndex );
   displayRiddle();
 }
 
@@ -588,6 +593,10 @@ function checkAnswer(selected, correct, analysis) {
     resultDiv.className = "bg-green-50 p-6 rounded-xl border border-green-200 mt-6";
     resultTitle.innerHTML = "🎉 أحسنت! الإجابة صحيحة";
     resultTitle.className = "text-xl font-semibold mb-3 text-green-600";
+
+    setTimeout(()=>{
+      update()
+    },2000)
   } else {
     resultDiv.className = "bg-red-50 p-6 rounded-xl border border-red-200 mt-6";
     resultTitle.innerHTML = "❌ للأسف الإجابة خاطئة";
