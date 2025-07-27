@@ -512,16 +512,11 @@ function saveRiddleIndex(i) {
   displayRiddle();
 }
 
- var score = parseInt(localStorage.getItem("score")) || 0;
-var scoreDisplay2 = document.getElementById("scoreDisplay2");
-  scoreDisplay2.textContent = `النقاط : ${score}`;
 
+  
 function displayRiddle() {
-
   var scoreDisplay = document.getElementById("scoreDisplay");
  var score = parseInt(localStorage.getItem("score")) || 0;
-
- 
   const riddleIndex = parseInt(localStorage.getItem('currentRiddle')) || 0;
   const riddle = riddles[riddleIndex];
   const containerRiddle = document.querySelector(".container-riddle");
@@ -579,13 +574,15 @@ function checkAnswer(selected, correct, analysis) {
   const resultDiv = document.getElementById("answerResult");
   const resultTitle = document.getElementById("resultTitle");
   const resultAnalysis = document.getElementById("resultAnalysis");
+  const scoreDisplay = document.getElementById("scoreDisplay");
 
   resultDiv.classList.remove("hidden");
 
- 
+  // جيب القيمة من localStorage الأول
+  let score = parseInt(localStorage.getItem("score")) || 0;
 
   if (selected === correct) {
-    score += 1; // نعدّل على المتغير بعد ما نجيبه من localStorage
+    score += 1;
     localStorage.setItem("score", score);
 
     resultDiv.className = "bg-green-50 p-6 rounded-xl border border-green-200 mt-6";
@@ -597,12 +594,11 @@ function checkAnswer(selected, correct, analysis) {
     resultTitle.className = "text-xl font-semibold mb-3 text-red-600";
   }
 
-  if (scoreDisplay) {
-    scoreDisplay.textContent = `النقاط : ${score}`;
-  }
+  // تحديث عرض النقاط
+  scoreDisplay.textContent = `النقاط : ${score}`;
 
+  // عرض التحليل
   resultAnalysis.innerHTML = analysis;
   resultDiv.scrollIntoView({ behavior: "smooth" });
 }
-  
 
