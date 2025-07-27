@@ -557,9 +557,9 @@ function displayRiddle() {
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        ${riddle.choices.map(choice => `
-         <button onclick="checkAnswer('${choice}', '${riddle.answer}', '${riddle.analysis.replace(/'/g, "\\'")}')"
-          class="bg-white hover:bg-gray-50 border-2 border-gray-200 rounded-lg p-4 text-lg font-medium transition-all shadow-sm hover:shadow-md">
+        ${riddle.choices.map((choice,i) => `
+         <button  onclick="checkAnswer('${choice}', '${riddle.answer}', '${riddle.analysis.replace(/'/g, "\\'")}' ,'${i}')"
+          class=" option-btn bg-white hover:bg-gray-50 border-2 border-gray-200 rounded-lg p-4 text-lg font-medium transition-all shadow-sm hover:shadow-md">
             ${choice}
           </button>
         `).join("")}
@@ -575,7 +575,12 @@ function displayRiddle() {
   containerRiddle.innerHTML = html;
   console.log(score)
 }
-function checkAnswer(selected, correct, analysis) {
+
+
+
+function checkAnswer(selected, correct, analysis,ii) {
+
+
   const resultDiv = document.getElementById("answerResult");
   const resultTitle = document.getElementById("resultTitle");
   const resultAnalysis = document.getElementById("resultAnalysis");
@@ -585,8 +590,23 @@ function checkAnswer(selected, correct, analysis) {
 
   // جيب القيمة من localStorage الأول
   let score = parseInt(localStorage.getItem("score")) || 0;
+ let optionBtn=document.querySelectorAll(".option-btn");
+   optionBtn.forEach(btn => {
 
+
+    const text = btn.textContent.trim();
+
+    if (text === correct.trim()) {
+      // الزر الصحيح دائماً بالأخضر
+      btn.classList.add("bg-green-100", "text-green-700", "border-green-300");
+    } else if (text === selected.trim()) {
+      // الزر المختار إذا كان خطأ يلون بالأحمر
+      btn.classList.add("bg-red-100", "text-red-700", "border-red-300");
+    }
+  });
   if (selected === correct) {
+     
+
     score += 1;
     localStorage.setItem("score", score);
 
@@ -594,15 +614,29 @@ function checkAnswer(selected, correct, analysis) {
     resultTitle.innerHTML = "🎉 أحسنت! الإجابة صحيحة";
     resultTitle.className = "text-xl font-semibold mb-3 text-green-600";
 
+    optionBtn.forEach(btn => {
+  
+    if(btn.textContent===correct){
+      btn.classList.add("bg-green-50", "text-green-600", "border-green-200");
+}
+});
+
     setTimeout(()=>{
       update()
     },2000)
   } else {
+    
     resultDiv.className = "bg-red-50 p-6 rounded-xl border border-red-200 mt-6";
     resultTitle.innerHTML = "❌ للأسف الإجابة خاطئة";
     resultTitle.className = "text-xl font-semibold mb-3 text-red-600";
+       setTimeout(()=>{
+      update()
+    },2000)
   }
+optionBtn.forEach(btn => {btn.disabled = true ;
+  btn.classList.remove("hover:shadow-md","hover:bg-gray-50","shadow-sm")
 
+} );
   // تحديث عرض النقاط
   scoreDisplay.textContent = `النقاط : ${score}`;
 
