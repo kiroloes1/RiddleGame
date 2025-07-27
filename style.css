@@ -1,0 +1,84 @@
+* {
+      font-family: 'Cairo', sans-serif;
+      padding: 0;
+      margin: 0;
+      scroll-behavior: smooth;
+      transition: all 0.5s ease-in-out;
+    }
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    display: none;
+  }
+}
+
+@keyframes slideOutTobottom {
+  0% {
+    transform: translateX(-100%);
+    
+  }
+  100% {
+    transform: translateX(0%);
+ 
+  }
+}
+
+#riddles-section{
+    animation: slideOutTobottom 0.8s ease forwards;
+    height: fit-content;
+    z-index: 100;
+}
+
+.slide-out {
+  animation: slideOutToRight 1s ease forwards;
+}
+.card{
+    box-shadow: 0px 3px 10px rgba(128, 128, 128, 0.112),
+    0px -3px 10px rgba(128, 128, 128, 0.283)
+}
+@media (min-width:635px) {
+   #intro{
+ height: 100vh;
+   }
+   
+}
+
+.page-folded {
+    display: flex;
+  position: relative;
+  background: white;
+  padding: 2rem;
+  border-bottom-right-radius: 35px;
+  border-top-left-radius: 35px;
+  box-shadow: 5px 5px 15px rgba(152, 151, 151, 0.284);
+}
+
+/* الزاوية العلوية الشمال */
+.page-folded::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  border-top: 2px solid #007BFF;
+  border-left:2px solid #007BFF;
+  border-top-left-radius: 40px;
+}
+
+/* الزاوية السفلية اليمين */
+.page-folded::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  border-bottom:2px solid #007BFF;
+  border-right: 2px solid #007BFF;
+  border-bottom-right-radius: 100px;
+}
