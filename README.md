@@ -53,5 +53,6 @@ Each riddle contains:
 
 1. Clone this repo:
    ```bash
-   git clone https://github.com/yourusername/riddle-game.git
+ [  git clone https://github.com/yourusername/riddle-game.git
    cd riddle-game
+](https://kiroloes1.github.io/RiddleGame/)
